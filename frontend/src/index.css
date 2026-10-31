@@ -1,0 +1,445 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   CYBER INCIDENT PLATFORM: TEAL SHIELD THEME
+   Light is the default. Dark is opt-in via <html data-theme="dark">.
+   ========================================================================== */
+
+/* ---------- 1. LIGHT MODE (DEFAULT) ---------- */
+:root {
+  /* Core palette */
+  --bg:            #f5f9f9;  /* Main canvas */
+  --surface:       #ffffff;  /* Cards, modals */
+  --surface-2:     #eef4f4;  /* Header, input fills, table hover */
+  --rail:          #0f2e30;  /* Left navigation sidebar */
+  --line:          #d5e3e3;  /* Borders, dividers, card outlines */
+  --fg:            #10292b;  /* Primary text, headings */
+  --muted:         #54706f;  /* Secondary text, timestamps (4.9:1 on bg) */
+  --accent:        #0f766e;  /* Primary buttons, active links */
+  --accent-hover:  #115e59;  /* Hover / pressed */
+  --accent-soft:   #d7efec;  /* Icon badges, chips */
+  --on-accent:     #ffffff;  /* Text on accent buttons */
+
+  /* Sidebar (sits on the dark rail in both modes) */
+  --rail-fg:       #d5e8e6;
+  --rail-muted:    #8fb0ae;
+  --rail-active:   rgba(45, 212, 191, 0.14);
+  --rail-accent:   #2dd4bf;  /* Active item marker and icon */
+
+  /* Severity: primary / soft badge background / badge text */
+  --crit:          #dc2626;  --crit-soft: #fdecec;  --crit-text: #b91c1c;
+  --high:          #ea580c;  --high-soft: #fff0e4;  --high-text: #c2410c;
+  --med:           #d97706;  --med-soft:  #fef4dc;  --med-text:  #92400e;
+  --low:           #2563eb;  --low-soft:  #e6eefd;  --low-text:  #1d4ed8;
+  --ok:            #16a34a;  --ok-soft:   #e3f6e9;  --ok-text:   #15803d;
+
+  /* Aliases for backwards compatibility */
+  --critical:      var(--crit);
+  --critical-soft: var(--crit-soft);
+  --critical-text: var(--crit-text);
+  --medium:        var(--med);
+  --medium-soft:   var(--med-soft);
+  --medium-text:   var(--med-text);
+
+  /* Terminal / scanner console stays dark in both modes */
+  --term-bg:       #040d18;
+  --term-info:     #7fb8e0;
+  --term-success:  #52d38e;
+  --term-warn:     #f2c64f;
+  --term-error:    #ff7080;
+  --term-text:     #c0d4ed;
+
+  /* Typography */
+  --font-head:     'Sora', sans-serif;           /* 500, 600, 700 */
+  --font-body:     'IBM Plex Sans', sans-serif;  /* 400, 500, 600 */
+  --font-mono:     'IBM Plex Mono', monospace;   /* 400, 500: IPs, CVEs */
+
+  /* Radii and shadows */
+  --radius-card:   14px;
+  --radius-btn:    8px;
+  --radius-pill:   9999px;
+  --shadow-card:   0 1px 2px rgba(16, 41, 43, 0.06), 0 4px 16px rgba(16, 41, 43, 0.06);
+  --focus-ring:    0 0 0 3px rgba(15, 118, 110, 0.28);
+
+  color-scheme: light;
+}
+
+/* ---------- 2. DARK MODE (teal-tinted to match the new brand) ---------- */
+:root[data-theme="dark"] {
+  --bg:            #0a1819;
+  --surface:       #102324;
+  --surface-2:     #0c1d1e;
+  --rail:          #061112;
+  --line:          #1e3a3b;
+  --fg:            #e4f1f0;
+  --muted:         #8daaa9;
+  --accent:        #2dd4bf;
+  --accent-hover:  #5eead4;
+  --accent-soft:   #0f3a3a;
+  --on-accent:     #04201e;
+
+  --rail-fg:       #d5e8e6;
+  --rail-muted:    #7fa09e;
+  --rail-active:   rgba(45, 212, 191, 0.16);
+  --rail-accent:   #2dd4bf;
+
+  /* Severity colours carried over from dark palette */
+  --crit:          #ff7080;  --crit-soft: #3b1a22;  --crit-text: #ff7080;
+  --high:          #ff9d52;  --high-soft: #38240f;  --high-text: #ff9d52;
+  --med:           #f2c64f;  --med-soft:  #33290d;  --med-text:  #f2c64f;
+  --low:           #6eaef7;  --low-soft:  #15294a;  --low-text:  #6eaef7;
+  --ok:            #52d38e;  --ok-soft:   #123423;  --ok-text:   #52d38e;
+
+  /* Aliases for backwards compatibility */
+  --critical:      var(--crit);
+  --critical-soft: var(--crit-soft);
+  --critical-text: var(--crit-text);
+  --medium:        var(--med);
+  --medium-soft:   var(--med-soft);
+  --medium-text:   var(--med-text);
+
+  --shadow-card:   0 2px 20px 0 rgba(0, 0, 0, 0.35);
+  --focus-ring:    0 0 0 3px rgba(45, 212, 191, 0.35);
+
+  color-scheme: dark;
+}
+
+/* ── Base Styles ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body), 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Utility Classes */
+.font-sora { font-family: var(--font-head), 'Sora', sans-serif; }
+.font-plex { font-family: var(--font-body), 'IBM Plex Sans', sans-serif; }
+.font-mono { font-family: var(--font-mono), 'IBM Plex Mono', monospace; }
+
+/* ── Layout Utilities ─────────────────────────────────────────────────────── */
+@layer utilities {
+  .bg-canvas   { background-color: var(--bg); }
+  .bg-surface  { background-color: var(--surface); }
+  .bg-surface2 { background-color: var(--surface-2); }
+  .bg-rail     { background-color: var(--rail); }
+  .border-line { border-color: var(--line); }
+  .text-fg     { color: var(--fg); }
+  .text-muted  { color: var(--muted); }
+  .text-accent { color: var(--accent); }
+
+  .card {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ── Component Layer ──────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-medium
+           transition-all duration-150 focus-visible:outline focus-visible:outline-2
+           focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-body);
+    outline-color: var(--accent);
+  }
+
+  .btn-primary {
+    background-color: var(--accent);
+    color: var(--on-accent);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    filter: brightness(1.05);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--line);
+    color: var(--fg);
+  }
+  .btn-outline:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+    background-color: var(--accent-soft);
+  }
+
+  .btn-danger {
+    background-color: var(--crit-soft);
+    color: var(--crit-text);
+    border: 1px solid transparent;
+  }
+  .btn-danger:hover:not(:disabled) {
+    filter: brightness(0.95);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--muted);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background-color: var(--surface-2);
+    color: var(--fg);
+  }
+
+  .btn-icon {
+    @apply btn p-0 w-[34px] h-[34px] justify-center;
+  }
+
+  .btn-sm {
+    @apply text-xs px-3 py-1.5;
+  }
+
+  /* Form inputs */
+  .input {
+    @apply w-full px-3 py-2 text-sm
+           transition-colors duration-150 focus:outline-none;
+    font-family: var(--font-body);
+    border-radius: var(--radius-btn);
+    background-color: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--fg);
+  }
+  .input:focus {
+    border-color: var(--accent);
+    box-shadow: var(--focus-ring);
+  }
+  .input::placeholder {
+    color: var(--muted);
+  }
+
+  select.input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2354706f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 32px;
+  }
+
+  .input-label {
+    @apply block text-sm font-medium mb-1.5;
+    color: var(--fg);
+  }
+
+  .input-error {
+    @apply text-xs mt-1;
+    color: var(--crit-text);
+  }
+
+  /* Status Pill */
+  .status-pill {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium;
+    font-family: var(--font-body);
+    height: 24px;
+  }
+
+  .status-open        { background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+  .status-inprogress  { background: var(--low-soft);  color: var(--low-text);   }
+  .status-resolved    { background: var(--ok-soft);   color: var(--ok-text);    }
+
+  /* Severity Badges & Pills */
+  .badge {
+    border-radius: var(--radius-pill);
+    padding: 2px 10px;
+    font-weight: 600;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .badge-critical { background: var(--crit-soft); color: var(--crit-text); }
+  .badge-high     { background: var(--high-soft); color: var(--high-text); }
+  .badge-medium   { background: var(--med-soft);  color: var(--med-text); }
+  .badge-low      { background: var(--low-soft);  color: var(--low-text); }
+  .badge-ok       { background: var(--ok-soft);   color: var(--ok-text); }
+
+  .severity-pill {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    font-family: var(--font-body);
+    height: 24px;
+  }
+
+  .severity-critical  { background: var(--crit-soft); color: var(--crit-text); border: 1px solid rgba(220, 38, 38, 0.2); }
+  .severity-high      { background: var(--high-soft); color: var(--high-text); border: 1px solid rgba(234, 88, 12, 0.2); }
+  .severity-medium    { background: var(--med-soft);  color: var(--med-text);  border: 1px solid rgba(217, 119, 6, 0.2); }
+  .severity-low       { background: var(--low-soft);  color: var(--low-text);  border: 1px solid rgba(37, 99, 235, 0.2); }
+
+  /* Chip */
+  .chip {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium;
+    font-family: var(--font-body);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  /* Modal scrim */
+  .modal-scrim {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(6, 17, 18, 0.65);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.15s ease;
+  }
+
+  .modal-box {
+    @apply relative w-full max-h-[90vh] overflow-y-auto p-6;
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+    animation: slideUp 0.2s ease;
+  }
+
+  /* Toast */
+  .toast {
+    @apply fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-4 py-3 text-sm;
+    border-radius: var(--radius-card);
+    font-family: var(--font-body);
+    min-width: 280px;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    animation: toastIn 0.25s ease, toastOut 0.3s ease 3.2s forwards;
+  }
+
+  .toast-success { background: var(--ok-soft);   color: var(--ok-text);   border: 1px solid var(--ok); }
+  .toast-error   { background: var(--crit-soft); color: var(--crit-text); border: 1px solid var(--crit); }
+  .toast-info    { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); }
+
+  /* Terminal log box */
+  .terminal-box, .terminal {
+    @apply font-mono text-xs p-4 overflow-y-auto;
+    border-radius: var(--radius-card);
+    background: var(--term-bg);
+    color: var(--term-text);
+    min-height: 260px;
+    max-height: 380px;
+  }
+
+  .log-info, .terminal .info    { color: var(--term-info); }
+  .log-ok, .terminal .ok        { color: var(--term-success); }
+  .log-warn, .terminal .warn    { color: var(--term-warn); }
+  .log-error, .terminal .err    { color: var(--term-error); }
+}
+
+/* ── Animations ───────────────────────────────────────────────────────────── */
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(100%); } }
+@keyframes spin     { to { transform: rotate(360deg); } }
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 30%, transparent); }
+  50%       { box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Drag-and-drop ───────────────────────────────────────────────────────── */
+.kanban-col.drag-over {
+  outline: 2px dashed var(--accent);
+  outline-offset: -3px;
+  background-color: var(--accent-soft);
+}
+
+/* ── Recharts overrides ─────────────────────────────────────────────────── */
+.recharts-tooltip-wrapper { outline: none; }
+.recharts-default-tooltip {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  color: var(--fg) !important;
+  font-family: var(--font-body), 'IBM Plex Sans', sans-serif !important;
+  font-size: 12px !important;
+}
+
+/* ── Radar animation (login page) ────────────────────────────────────────── */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.radar-sweep {
+  transform-origin: center;
+  animation: radarSweep 4s linear infinite;
+}
+
+/* ── Google Pro Avatar Ring ──────────────────────────────────────────────── */
+@keyframes googleProSpin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.google-pro-avatar-wrapper {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.google-pro-avatar-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  background: conic-gradient(from 0deg, #4285F4, #9B72CB, #D96570, #F4B400, #00C853, #4285F4);
+  animation: googleProSpin 5s linear infinite;
+  box-shadow: 0 0 10px rgba(66, 133, 244, 0.45), 0 0 16px rgba(155, 114, 203, 0.25);
+}
+
+.google-pro-avatar-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  border-radius: 9999px;
+  background: var(--rail, #0f2e30);
+  z-index: 1;
+}
+
+.google-pro-avatar-content {
+  position: relative;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  color: #ffffff;
+  user-select: none;
+}
